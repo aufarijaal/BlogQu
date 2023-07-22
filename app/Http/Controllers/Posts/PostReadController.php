@@ -68,11 +68,11 @@ class PostReadController extends Controller
             ->get();
 
         $comments = \App\Models\Comment::with([
-                "replies.commenter:id,name" => ["profile:user_id,username,pp"],
-                "commenter:id,name" => ["profile:user_id,username,pp"],
-                "likes.user:id"
-            ])
-            ->where("post_id", 132)
+            "replies.commenter:id,name" => ["profile:user_id,username,pp"],
+            "commenter:id,name" => ["profile:user_id,username,pp"],
+            "likes.user:id"
+        ])
+            ->where("post_id", $post->post_id)
             ->where("parent_id", null)
             ->get()->toArray();
 

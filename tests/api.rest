@@ -1,0 +1,33 @@
+GET http://localhost:8000/api/tags?q=Fit
+
+Accept: application/json
+
+###
+
+GET http://localhost:8000/api/tags/blockchain
+Accept: application/json
+
+###
+
+GET http://localhost:8000/api
+Accept: application/json
+
+###
+
+GET http://localhost:8000/api/categories/1-science-and-technology
+Accept: application/json
+
+###
+
+GET http://localhost:8000/api/search/posts?q=Officia Minus
+Accept: application/json
+
+###
+
+GET http://localhost:8000/api/posts/hfeest
+Accept: application/json
+
+###
+
+GET http://localhost:8000/api/favorites
+Accept: application/json

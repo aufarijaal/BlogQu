@@ -1,28 +1,37 @@
 <x-root-layout>
     <x-slot name="head">
-        <title>{{ "$author->author_name (@$author->author_username)" }} &middot; BlogQu</title>
+        <title>{{ "@$author->author_username ($author->author_name)" }} &middot; BlogQu</title>
     </x-slot>
 
     <x-slot name="body">
-        <div class="max-w-5xl min-h-screen mx-auto py-20 flex flex-col gap-6">
-            <div class="bg-white shadow-sm rounded-none sm:rounded-md p-6 flex flex-col items-center gap-4">
+        <div class="flex flex-col max-w-5xl min-h-screen gap-6 py-20 mx-auto">
+            <div class="flex flex-col items-center gap-4 p-6 bg-white rounded-none shadow-sm sm:rounded-md">
                 <div>
-                    <img class="w-20 h-20 rounded-full" src="{{ $author->author_pp }}"
-                        alt="{{ $author->author_name . '\'s profile picture' }}">
+                    @if (!is_null($author->author_pp))
+                        <img class="w-20 h-20 rounded-full" src="{{ asset('/storage/' . $author->author_pp) }}"
+                            alt="{{ $author->author_name . '\'s profile picture' }}">
+                    @else
+                        <div
+                            class="flex items-center justify-center flex-shrink-0 w-16 h-16 rounded-full cursor-pointer bg-zinc-200">
+                            <x-icons.user-outline class="w-7 h-7 text-zinc-400" />
+                        </div>
+                    @endif
                 </div>
                 <div class="flex flex-col items-center gap-1">
-                    <div class="font-bold font-barlow text-2xl">{{ $author->author_name }}</div>
-                    <div class="text-zinc-400 text-sm">{{ $author->author_username }}</div>
-                    <div class="text-zinc-400 text-sm">Joined {{ \Illuminate\Support\Carbon::createFromFormat('Y-m-d H:i:s', $author->joined_at)->diffForHumans() }}</div>
+                    <div class="text-2xl font-bold font-barlow">{{ $author->author_name }}</div>
+                    <div class="text-sm text-zinc-400">{{ $author->author_username }}</div>
+                    <div class="text-sm text-zinc-400">Joined
+                        {{ \Illuminate\Support\Carbon::createFromFormat('Y-m-d H:i:s', $author->joined_at)->diffForHumans() }}
+                    </div>
                 </div>
                 <div>
                     <p class="text-sm text-justify">{{ $author->author_bio }}</p>
                 </div>
             </div>
 
-            <div class="bg-white shadow-sm rounded-none sm:rounded-md flex flex-col overflow-hidden"
+            <div class="flex flex-col overflow-hidden bg-white rounded-none shadow-sm sm:rounded-md"
                 x-data="{ tab: 'posts' }">
-                <div class="h-10 flex">
+                <div class="flex h-10">
                     <div :class="['flex justify-center items-center w-full font-semibold border-b cursor-pointer', tab === 'posts' ?
                         'text-cyan-500 bg-cyan-50 border-cyan-500' : 'text-zinc-500'
                     ]"
@@ -33,7 +42,7 @@
                         @click="tab = 'about'">About</div>
                 </div>
 
-                <div class="p-6 flex flex-wrap gap-4 justify-center" x-show="tab === 'posts'">
+                <div class="flex flex-wrap justify-center gap-4 p-6" x-show="tab === 'posts'">
                     @foreach ($posts as $post)
                         <x-post-card :post="$post" />
                     @endforeach

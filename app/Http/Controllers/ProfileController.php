@@ -16,8 +16,10 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $profile = \App\Models\Profile::where("user_id", $request->user()->id)->get()->first();
         return view('profile.edit', [
             'user' => $request->user(),
+            'profile' => $profile
         ]);
     }
 

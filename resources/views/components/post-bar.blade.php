@@ -19,7 +19,7 @@
             </button>
         </form>
 
-        <form action="{{ route('posts.destroy', ['postId', $post->post_id]) }}" method="post" x-data @submit.prevent="() => {
+        <form action="{{ route('posts.destroy') }}" method="post" x-data @submit.prevent="() => {
             if(confirm('Are you sure?')) {
                 $el.submit();
             } else {
@@ -28,7 +28,7 @@
         }">
             @csrf
             @method('delete')
-
+            <input type="hidden" name="post-id" value="{{ $post->post_id }}">
             <button class="bg-rose-50 w-10 h-10 rounded-full flex justify-center items-center border border-rose-500" title="Delete post">
                 <x-icons.delete class="text-rose-500"/>
             </button>

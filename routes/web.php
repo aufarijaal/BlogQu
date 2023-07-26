@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdditionalProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfilePictureController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +23,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::patch('/additional-profile', [AdditionalProfileController::class, 'store'])->name('additional_profile.update');
+
+    Route::patch('/additional-profile/pp', [ProfilePictureController::class, 'store'])->name('additional_profile.pp.store');
+    Route::delete('/additional-profile/pp', [ProfilePictureController::class, 'destroy'])->name('additional_profile.pp.destroy');
 });
 
 require __DIR__.'/auth.php';

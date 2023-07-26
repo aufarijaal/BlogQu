@@ -35,7 +35,12 @@ class CommentLikeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        CommentLike::create([
+            "comment_id" => $request["comment-id"],
+            "user_id" => auth()->user()->id
+        ]);
+
+        return back();
     }
 
     /**
@@ -78,8 +83,10 @@ class CommentLikeController extends Controller
      * @param  \App\Models\CommentLike  $commentLike
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CommentLike $commentLike)
+    public function destroy(Request $request)
     {
-        //
+        CommentLike::where("comment_id", (int) $request["comment-id"])->delete();
+
+        return back();
     }
 }

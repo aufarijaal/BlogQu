@@ -37,7 +37,9 @@ class PostFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (Post $post) {
-            if(!fake()->boolean(80)) return;
+            if(!fake()->boolean(80)) {
+                return;
+            }
             $post->tags()->sync(\App\Models\Tag::all(["id"])->random(fake()->numberBetween(1, 5))->pluck("id")->toArray());
         });
     }

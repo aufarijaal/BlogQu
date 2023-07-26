@@ -35,7 +35,14 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Comment::create([
+            "post_id" => $request["post-id"],
+            "user_id" => auth()->user()->id,
+            "parent_id" => $request["parent-id"],
+            "content" => $request["content"]
+        ]);
+
+        return redirect()->to(url()->previous() . "#comments-section");
     }
 
     /**
@@ -69,7 +76,11 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        //
+        Comment::where("id", (int) $request['comment-id'])->update([
+            "content" => $request["content"]
+        ]);
+
+        return redirect()->to(url()->previous() . "#comments-section");
     }
 
     /**
@@ -78,8 +89,11 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function destroy(Request $request)
     {
-        //
+        Comment::where("id", (int) $request['comment-id'])->delete();
+        Comment::where("parent_id", (int) $request['comment-id'])->delete();
+
+        return redirect()->to(url()->previous() . "#comments-section");
     }
 }

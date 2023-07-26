@@ -23,15 +23,16 @@ class HomeController extends Controller
             "posts.status as post_status",
             "posts.parent_id as post_parent_id",
             "posts.updated_at",
+            DB::raw("(SELECT COUNT(*) FROM likes WHERE likes.post_id = posts.id) as likes_count"),
+            DB::raw("(SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id) as comments_count")
         )->join("users", "users.id", "=", "posts.user_id")
             ->join("profiles", "profiles.user_id", "=", "users.id")
             ->join("categories", "categories.id", "=", "posts.category_id")
             ->where("posts.status", "published")
-            ->groupBy(
-                "posts.id",
-            )
+            ->groupBy("posts.id")
+            ->orderByDesc("likes_count") // Sort by likes_count in descending order
+            ->orderByDesc("comments_count") // Secondary sort by comments_count in descending order
             ->limit(8)
-            ->inRandomOrder()
             ->get();
         $categories = DB::table("categories")->inRandomOrder()->limit(10)->get();
         $tags = DB::table("tags")->inRandomOrder()->limit(15)->get();

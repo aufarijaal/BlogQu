@@ -3,6 +3,7 @@
 use App\Http\Controllers\Posts\MyPostsController;
 use App\Http\Controllers\Posts\PostReadController;
 use App\Http\Controllers\Posts\PostController;
+use App\Http\Controllers\Posts\PostThumbnailController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix("posts")->group(function () {
@@ -15,18 +16,21 @@ Route::prefix("posts")->group(function () {
         // Get all authenticated user posts
         Route::get("my-posts", MyPostsController::class)->name("posts.my");
         // Create new empty post
-        Route::post("new", [PostController::class, "create"])->name("posts.create");
+        Route::post("new", [PostController::class, "store"])->name("posts.create");
         // Edit post
         Route::get("{postId}/edit", [PostController::class, "edit"])->name("posts.edit");
         // Save post
-        Route::put("store", [PostController::class, "store"])->name("posts.store");
+        Route::put("store", [PostController::class, "update"])->name("posts.store");
+        // Route::put("store", function() {
+        //     dd(request()->all());
+        // })->name("posts.store");
 
         // Save post thumbnail
-        Route::put("store/thumbnail", [PostController::class, "uploadThumbnail"])->name("posts.store.thumbnail");
+        Route::put("store/thumbnail", [PostThumbnailController::class, "store"])->name("posts.thumbnail.store");
 
-        Route::delete("store/thumbnail", [PostController::class, "deleteThumbnail"])->name("posts.store.thumbnail.delete");
+        Route::delete("store/thumbnail", [PostThumbnailController::class, "destroy"])->name("posts.thumbnail.destroy");
 
         // Delete post
-        Route::delete("{postId}/destroy", [PostController::class, "destroy"])->name("posts.destroy");
+        Route::delete("/", [PostController::class, "destroy"])->name("posts.destroy");
     });
 });

@@ -3,13 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\Comment;
-use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
-class CommentSeeder extends Seeder
+class RepliesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -20,17 +18,18 @@ class CommentSeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
 
-        $posts = Post::all();
+        $comments = Comment::whereNull('parent_id')->get();
         $users = User::all();
 
-        foreach ($posts as $post) {
-            $commentsCount = mt_rand(0, 10);
+        foreach ($comments as $comment) {
+            $repliesCount = mt_rand(0, 5);
 
-            for ($i = 0; $i < $commentsCount; $i++) {
+            for ($i = 0; $i < $repliesCount; $i++) {
                 Comment::create([
-                    'post_id' => $post->id,
+                    'post_id' => $comment->post_id,
                     'user_id' => $users->random()->id,
                     'content' => $faker->text(200),
+                    'parent_id' => $comment->id,
                 ]);
             }
         }

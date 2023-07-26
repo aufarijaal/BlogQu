@@ -10,7 +10,7 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
-        "te7a-houdini/laravel-trix": "^2.0"
+        "tonysm/rich-text-laravel": "^1.7"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",

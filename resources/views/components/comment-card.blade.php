@@ -3,7 +3,7 @@
 @php
     $commentLiked = false;
     foreach ($comment['likes'] as $like) {
-        if ($like['user']['id'] === Auth::user()->id) {
+        if (Auth::user() && $like['user']['id'] === Auth::user()->id) {
             $commentLiked = true;
             break;
         }
@@ -11,7 +11,7 @@
 @endphp
 
 <div class="w-full">
-    <div class="flex items-center w-full gap-2 p-3 pr-1 border rounded-md comment" {{ $attributes }}>
+    <div class="flex items-center w-full gap-2 p-3 pr-1 border rounded-md comment dark:border-zinc-600 dark:text-white" {{ $attributes }}>
         @if (!is_null($comment['commenter']['profile']['pp']))
             <img class="flex-shrink-0 w-8 h-8 rounded-full"
                 src="{{ asset('/storage/' . $comment['commenter']['profile']['pp']) }}"
@@ -101,12 +101,12 @@
             </button>
             <div class="flex flex-col gap-2" x-show="showReplies">
                 @foreach ($comment['replies'] as $reply)
-                    <div class="flex items-center gap-1">
+                    <div class="flex items-center gap-1 dark:text-white">
                         <x-icons.arrow-down-right class="flex-shrink-0 text-zinc-400" />
-                        <div class="flex items-center flex-grow w-full gap-2 p-3 pr-1 border rounded-md reply">
-                            @if (!is_null($comment['commenter']['profile']['pp']))
+                        <div class="flex items-center flex-grow w-full gap-2 p-3 pr-1 border dark:border-zinc-600 rounded-md reply">
+                            @if (!is_null($reply['commenter']['profile']['pp']))
                                 <img class="flex-shrink-0 w-8 h-8 rounded-full"
-                                    src="{{ asset('/storage/' . $comment['commenter']['profile']['pp']) }}"
+                                    src="{{ asset('/storage/' . $reply['commenter']['profile']['pp']) }}"
                                     alt="{{ $comment['commenter']['name'] . '\'s profile picture' }}">
                             @else
                                 <div

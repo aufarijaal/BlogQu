@@ -34,8 +34,30 @@ class HomeController extends Controller
             ->orderByDesc("comments_count") // Secondary sort by comments_count in descending order
             ->limit(8)
             ->get();
-        $categories = DB::table("categories")->inRandomOrder()->limit(10)->get();
-        $tags = DB::table("tags")->inRandomOrder()->limit(15)->get();
+
+        $categories = DB::table("categories")
+            ->select([
+                "categories.id",
+                "categories.name",
+                "categories.slug",
+                DB::raw("COUNT(posts.category_id) AS posts_count")
+            ])
+            ->leftJoin("posts", "categories.id", "=", "posts.category_id")
+            ->groupBy("categories.id", "posts.category_id")
+            ->orderByDesc("posts_count")
+            ->limit(10)
+            ->get();
+
+        $tags = DB::table("tags")
+            ->select([
+                "*",
+                DB::raw("COUNT(post_tags.post_id) as posts_count")
+            ])
+            ->leftJoin("post_tags", "tags.id", "=", "post_tags.tag_id")
+            ->groupBy("tags.id", "tags.name", "tags.slug")
+            ->orderByDesc("posts_count")
+            ->limit(15)
+            ->get();
 
         return view("home", [
             "posts" => $posts,

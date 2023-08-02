@@ -12,7 +12,7 @@
                 <x-dropdown>
                     <x-slot name="trigger">
                         <button
-                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-zinc-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                             <div>Sort by</div>
 
                             <div class="ml-1">
@@ -33,10 +33,36 @@
                     </x-slot>
                 </x-dropdown>
             </div>
-            <div class="bg-white p-6 rounded-md shadow-sm flex flex-col gap-2">
+            <div class="bg-white dark:bg-zinc-800 p-6 rounded-md shadow-sm flex flex-col gap-2">
                 @foreach ($posts as $post)
                     <x-post-bar :post="$post" />
                 @endforeach
+            </div>
+
+            {{-- Paginator --}}
+            <div class="w-full mt-4 flex justify-center gap-2">
+                @if (count($posts))
+                    @if ($hasPrevPage)
+                        <a class="bg-white w-max px-3 py-1.5 rounded-md text-sm flex gap-1 items-center shadow-sm"
+                            href="{{ route('posts.my', ['page' => $prevPage]) }}">
+                            <svg class="rotate-180 w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M12.6 12L8 7.4L9.4 6l6 6l-6 6L8 16.6l4.6-4.6Z" />
+                            </svg>
+                            Prev
+                        </a>
+                    @endif
+                    @if ($hasNextPage)
+                        <a class="bg-white w-max px-3 py-1.5 rounded-md text-sm flex gap-1 items-center shadow-sm"
+                            href="{{ route('posts.my', ['page' => $nextPage]) }}">
+                            Next
+                            <svg class="rotate-0 w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M12.6 12L8 7.4L9.4 6l6 6l-6 6L8 16.6l4.6-4.6Z" />
+                            </svg>
+                        </a>
+                    @endif
+                @endif
             </div>
         </div>
     </x-slot>

@@ -6,15 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class AuthorVisitController extends Controller
+class AuthorFavoritePostsController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function __invoke(Request $request, $username)
+    public function __invoke(Request $request)
     {
         $currentPage = $request->query("page") ?? 1;
         $dataPerPage = 10;
@@ -25,19 +19,7 @@ class AuthorVisitController extends Controller
         $totalPages = null;
         $totalData = null;
 
-        $author = DB::table("users")->select(
-            "users.id as author_id",
-            "users.name as author_name",
-            "profiles.username as author_username",
-            "profiles.pp as author_pp",
-            "profiles.bio as author_bio",
-            "profiles.about as author_about",
-            "users.created_at as joined_at"
-        )->join("profiles", "profiles.user_id", "=", "users.id")
-            ->where("profiles.username", $username)
-            ->get()->first();
-
-        $posts = DB::table('posts')->select(
+        $posts = \Illuminate\Support\Facades\DB::table('posts')->select(
             "posts.id as post_id",
             "posts.user_id as author_id",
             "users.name as author_name",
@@ -58,32 +40,23 @@ class AuthorVisitController extends Controller
             ->join("users", "users.id", "=", "posts.user_id")
             ->join("profiles", "profiles.user_id", "=", "users.id")
             ->join("categories", "categories.id", "=", "posts.category_id")
-            ->where(function ($query) {
-                $query->where("posts.status", "published")
-                    ->orWhere("posts.status", "archived");
-            })
-            ->where("profiles.username", $username)
+            ->whereIn("posts.id", \Illuminate\Support\Facades\DB::table("favorites")->select("post_id")->where("user_id", auth()->user()->id))
+            ->groupBy("posts.id")
             ->limit($dataPerPage)
             ->offset($dataPerPage * ($currentPage - 1))
             ->get();
 
-        $totalData = DB::table('posts')->select(DB::raw("COUNT(*) as total_count"))
+        $totalData = \Illuminate\Support\Facades\DB::table('posts')->select(DB::raw("COUNT(*) as total_count"))
             ->join("users", "users.id", "=", "posts.user_id")
             ->join("profiles", "profiles.user_id", "=", "users.id")
             ->join("categories", "categories.id", "=", "posts.category_id")
-            ->where(function ($query) {
-                $query->where("posts.status", "published")
-                    ->orWhere("posts.status", "archived");
-            })
-            ->where("profiles.username", $username)
-            ->get()->first()->total_count;
+            ->whereIn("posts.id", \Illuminate\Support\Facades\DB::table("favorites")->select("post_id")->where("user_id", auth()->user()->id))->get()->first()->total_count;
 
         $totalPages = (int) ceil($totalData / $dataPerPage);
         $hasPrevPage = $currentPage > 1;
         $hasNextPage = $currentPage < $totalPages;
 
-        return view("authors.visit", [
-            "author" => $author,
+        return view("posts.auth-user-favorites", [
             "posts" => $posts,
             "nextPage" => $nextPage,
             "prevPage" => $prevPage,

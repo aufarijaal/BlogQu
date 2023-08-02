@@ -6,7 +6,7 @@
 
     <x-slot name="body">
         <div class="flex flex-col max-w-5xl min-h-screen gap-6 py-20 mx-auto sm:pt-20" x-data="{ showComments: false }">
-            <div class="flex flex-col items-start gap-4 p-10 bg-white shadow-sm pt-28 sm:pt-10 sm:rounded-md">
+            <div class="flex flex-col items-start gap-4 p-10 bg-white dark:bg-zinc-800 shadow-sm pt-28 sm:pt-10 sm:rounded-md">
                 {{-- Link to edit the post if current user is authenticated --}}
                 @if (Auth::user() && Auth::user()->id == $post->author_id)
                     <form action="{{ route('posts.edit', ['postId' => $post->post_id]) }}" method="get">
@@ -19,7 +19,7 @@
 
                 <a class="category-chip" title="{{ $post->category_name }}"
                     href="{{ route('post_by_category', ['categorySlug' => $post->category_slug]) }}">{{ $post->category_name }}</a>
-                <h1 class="text-4xl font-bold md:text-5xl font-barlow">{{ $post->post_title }}</h1>
+                <h1 class="text-4xl font-bold md:text-5xl font-barlow dark:text-white">{{ $post->post_title }}</h1>
                 <div class="flex items-center gap-2">
                     @if (!is_null($post->author_pp))
                     <img class="w-10 h-10 rounded-full" src="{{ asset('/storage/' . $post->author_pp) }}"
@@ -30,7 +30,7 @@
                         </div>
                     @endif
                     <a href="{{ route('authors.visit', [$post->author_username, 'page' => 1]) }}"
-                        class="font-semibold">{{ $post->author_name }}</a>
+                        class="font-semibold dark:text-white">{{ $post->author_name }}</a>
                 </div>
                 <div>
                     <div class="text-zinc-400">
@@ -46,12 +46,12 @@
                 @endif
 
                 {{-- Body --}}
-                <div class="w-full h-px bg-zinc-300"></div>
-                <div class="w-full post-body-wrapper">
+                <div class="w-full h-px bg-zinc-300 dark:bg-zinc-600"></div>
+                <div class="w-full post-body-wrapper dark:text-white">
                     {!! $post->post_body !!}
                 </div>
 
-                <div class="w-full h-px bg-zinc-300"></div>
+                <div class="w-full h-px bg-zinc-300 dark:bg-zinc-600"></div>
 
                 {{-- Footer --}}
                 <div>
@@ -60,7 +60,7 @@
                         @if (!is_null($tags))
                             @foreach ($tags as $tag)
                                 <a class="tag-chip" title="{{ $tag['name'] }}"
-                                    href="{{ route('post_by_tags.index', ['tagSlug' => $tag['slug']]) }}">{{ $tag['name'] }}</a>
+                                    href="{{ route('post_by_tag', ['tagSlug' => $tag['slug']]) }}">{{ $tag['name'] }}</a>
                             @endforeach
                         @endif
                     </div>
@@ -69,7 +69,7 @@
 
             {{-- Like, Fav, Toggle Comment section --}}
             <div
-                class="bg-white shadow-sm sm:rounded-md flex p-4 pt-5 min-w-[200px] gap-4 items-center justify-around w-max h-max mx-auto">
+                class="bg-white dark:bg-zinc-800 shadow-sm sm:rounded-md flex p-4 pt-5 min-w-[200px] gap-4 items-center justify-around w-max h-max mx-auto">
                 <form class="flex flex-col items-center gap-2"
                     action="{{ !is_null($like) ? route('likes.destroy') : route('likes.store') }}" method="post"
                     title="{{ !is_null($like) ? 'Unlike' : 'Like' }}">

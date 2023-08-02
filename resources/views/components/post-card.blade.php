@@ -1,6 +1,6 @@
 @props(['post'])
 
-<div class="post-card w-[300px] h-max rounded-xl shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] shadow-zinc-100 border p-4 flex flex-col overflow-hidden gap-6 bg-white"
+<div class="post-card w-[300px] h-max rounded-xl shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] shadow-zinc-100 dark:shadow-zinc-900 border p-4 flex flex-col overflow-hidden gap-6 bg-white dark:bg-zinc-800 dark:border-zinc-700"
     x-data="{ showAltDate: false }" @mouseover="showAltDate = true" @mouseleave="showAltDate = false">
 
     {{-- Post card header --}}
@@ -17,7 +17,7 @@
             @endif
             <div class="flex flex-col justify-between w-full">
                 <a href="{{ route('authors.visit', [$post->author_username, 'page' => 1]) }}"
-                    class="overflow-hidden text-sm font-semibold w-52 whitespace-nowrap overflow-ellipsis"
+                    class="overflow-hidden text-sm font-semibold w-52 whitespace-nowrap overflow-ellipsis dark:text-white"
                     title="{{ $post->author_name }}">
                     {{ $post->author_name }}</a>
                 <div class="h-4 overflow-hidden text-xs text-gray-400 select-none">
@@ -38,8 +38,8 @@
                     src="{{ asset('/storage/' . $post->post_thumbnail) }}"
                     alt="{{ $post->title ?? 'Post' . '\'s Thumbnail' }}">
             @else
-                <div class="flex items-center justify-center w-full post-card-no-thumbnail h-44 rounded-xl bg-cyan-50">
-                    <x-application-logo class="opacity-50 text-cyan-500" />
+                <div class="flex items-center justify-center w-full post-card-no-thumbnail h-44 rounded-xl bg-cyan-50 dark:bg-cyan-800">
+                    <x-application-logo class="opacity-50 text-cyan-500 dark:text-cyan-300" />
                 </div>
             @endif
         </a>
@@ -48,11 +48,11 @@
     {{-- Post card content --}}
     <div class="flex flex-col gap-1 post-card-content">
         @if (!request()->routeIs('post_by_category'))
-            <a class="px-2 py-1 overflow-hidden rounded-full text-cyan-600 max-w-[200px] w-max block whitespace-nowrap overflow-ellipsis text-xs bg-cyan-50 border border-cyan-600 font-medium hover:bg-cyan-100"
+            <a class="px-2 py-1 overflow-hidden rounded-full text-cyan-600 max-w-[200px] w-max block whitespace-nowrap overflow-ellipsis text-xs bg-cyan-50 border border-cyan-600 font-medium hover:bg-cyan-100 dark:bg-cyan-800 dark:text-cyan-50 hover:dark:bg-cyan-900"
                 href="{{ $post->category_id != null ? route('post_by_category', ['categorySlug' => $post->category_slug]) : '#' }}">{{ $post->category_name ?? 'Uncategorized' }}</a>
         @endif
         <a href="{{ $post->post_slug != null ? route('posts.read', ['authorUsername' => $post->author_username, 'postSlug' => $post->post_slug]) : '#' }}"
-            class="min-h-[4.5rem] font-semibold post-card-title line-clamp-2"
+            class="min-h-[4.5rem] font-semibold post-card-title line-clamp-2 dark:text-white"
             title="{{ $post->post_title ?? 'Untitled' }}">{{ $post->post_title ?? 'Untitled' }}</a>
     </div>
 
@@ -60,11 +60,11 @@
     <div class="flex items-center gap-4 post-card-footer">
         <div class="flex items-center gap-1 text-sm">
             <x-icons.heart-outline class="w-5 h-5 text-zinc-400"/>
-            <div>{{ $post->likes_count }}</div>
+            <div class="dark:text-zinc-400">{{ $post->likes_count }}</div>
         </div>
         <div class="flex items-center gap-1 text-sm">
             <x-icons.comment class="w-5 h-5 text-zinc-400"/>
-            <div>{{ $post->comments_count }}</div>
+            <div class="dark:text-zinc-400">{{ $post->comments_count }}</div>
         </div>
     </div>
 </div>

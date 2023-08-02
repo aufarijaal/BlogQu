@@ -1,6 +1,6 @@
 @props(['post'])
 
-<div class="post-bar h-28 border rounded-md p-4 bg-inherit flex">
+<div class="post-bar h-28 border rounded-md p-4 bg-inherit flex dark:bg-zinc-800 dark:shadow-zinc-900 dark:border-zinc-600">
     <div class="flex flex-col justify-center gap-1 flex-grow">
         <div @class([
             'text-xs border rounded-full w-max h-max px-2 py-1',
@@ -8,7 +8,7 @@
             'bg-cyan-50 text-cyan-500 border-cyan-500' => $post->post_status == 'draft',
             'bg-yellow-50 text-yellow-600 border-yellow-500' => $post->post_status == 'archived'
         ])>{{ \Illuminate\Support\Str::title($post->post_status) }}</div>
-        <div class="font-bold line-clamp-1">{{ $post->post_title }}</div>
+        <div class="font-bold line-clamp-1 dark:text-white">{{ $post->post_title }}</div>
         <div class="text-sm text-zinc-400 line-clamp-1">Last updated
             {{ \Illuminate\Support\Carbon::createFromFormat('Y-m-d H:i:s', $post->post_updated_at)->diffForHumans() }}</div>
     </div>

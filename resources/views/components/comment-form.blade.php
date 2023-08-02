@@ -1,6 +1,6 @@
-<div class="p-3 bg-white shadow-sm sm:rounded-md" x-show="showComments">
+<div class="p-3 bg-white dark:bg-zinc-800 shadow-sm sm:rounded-md" x-show="showComments">
 
-    <div class="flex items-center justify-between p-3 mb-2 border rounded-md comment-reply-to border-cyan-500"
+    <div class="flex items-center justify-between p-3 mb-2 border rounded-md comment-reply-to border-cyan-500 dark:text-white"
         x-show="replyTo.name && replyTo.content">
         <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2 text-sm text-cyan-500">
@@ -40,7 +40,7 @@
         <input type="hidden" name="comment-id" x-ref="inputUpdateCommentId">
         <div class="flex flex-col gap-1">
             <textarea
-                class="text-sm transition duration-150 ease-in-out border-none rounded-md bg-zinc-100 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+                class="text-sm transition duration-150 ease-in-out border rounded-md bg-zinc-100 dark:bg-zinc-800 dark:border-zinc-600 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-800"
                 name="content" cols="30" rows="3" maxlength="200" placeholder="Write a comment..." required
                 x-ref="inputUpdateCommentContent" @input="inputCharCount = $el.value.length"
                 @keyup.ctrl.enter="() => {
@@ -65,7 +65,7 @@
         <input type="hidden" name="post-id" value={{ $post->post_id }}>
         <div class="flex flex-col gap-1">
             <textarea
-                class="text-sm transition duration-150 ease-in-out border-none rounded-md bg-zinc-100 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+                class="text-sm transition duration-150 ease-in-out border rounded-md dark:bg-zinc-800 dark:text-white dark:border-zinc-600 bg-zinc-100 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-800"
                 name="content" cols="30" rows="3" maxlength="200" placeholder="Write a comment..." required
                 @input="inputCharCount = $el.value.length" @keyup.ctrl.enter="() => {
                     if(!$refs.formCreateComment.checkValidity()) return $refs.formCreateComment.reportValidity();

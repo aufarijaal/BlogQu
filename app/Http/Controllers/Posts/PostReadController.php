@@ -58,6 +58,8 @@ class PostReadController extends Controller
                 "posts.status as post_status",
                 "posts.parent_id as post_parent_id",
                 "posts.updated_at",
+                DB::raw("(SELECT COUNT(*) FROM likes WHERE likes.post_id = posts.id) as likes_count"),
+                DB::raw("(SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id) as comments_count")
             )
                 ->join("users", "users.id", "=", "posts.user_id")
                 ->join("profiles", "profiles.user_id", "=", "users.id")

@@ -22,13 +22,13 @@
 
         <div>
             <x-input-label for="bio" :value="__('Bio')" />
-            <textarea class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-cyan-500 dark:focus:border-cyan-600 focus:ring-cyan-500 dark:focus:ring-cyan-600" name="bio" id="bio" cols="30" rows="3">{{ old('bio', $profile->bio) }}</textarea>
+            <textarea class="w-full border-zinc-300 rounded-md shadow-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 focus:border-cyan-500 dark:focus:border-cyan-600 focus:ring-cyan-500 dark:focus:ring-cyan-600" name="bio" id="bio" cols="30" rows="3">{{ old('bio', $profile->bio) }}</textarea>
             <x-input-error class="mt-2" :messages="$errors->get('bio')" />
         </div>
 
         <div>
             <x-input-label for="about" :value="__('About')" />
-            <textarea class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-cyan-500 dark:focus:border-cyan-600 focus:ring-cyan-500 dark:focus:ring-cyan-600" name="about" id="about" cols="30" rows="3">{{ old('about', $profile->about) }}</textarea>
+            <textarea class="w-full border-zinc-300 rounded-md shadow-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 focus:border-cyan-500 dark:focus:border-cyan-600 focus:ring-cyan-500 dark:focus:ring-cyan-600" name="about" id="about" cols="30" rows="3">{{ old('about', $profile->about) }}</textarea>
             <x-input-error class="mt-2" :messages="$errors->get('about')" />
         </div>
 
@@ -49,7 +49,7 @@
 
         <div>
             <x-input-label for="dob" :value="__('Date of Birth')" />
-            <input class="border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-cyan-500 dark:focus:border-cyan-600 focus:ring-cyan-500 dark:focus:ring-cyan-600" type="date" name="dob" id="dob" value="{{ $profile->dob }}">
+            <input class="border-zinc-300 rounded-md shadow-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 focus:border-cyan-500 dark:focus:border-cyan-600 focus:ring-cyan-500 dark:focus:ring-cyan-600" type="date" name="dob" id="dob" value="{{ $profile->dob }}">
             <x-input-error class="mt-2" :messages="$errors->get('dob')" />
         </div>
 

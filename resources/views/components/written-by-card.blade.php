@@ -1,4 +1,4 @@
-<div class="flex flex-col items-start gap-4 p-6 bg-white shadow-sm sm:rounded-md" x-show="!showComments">
+<div class="flex flex-col items-start gap-4 p-6 bg-white dark:bg-zinc-800 shadow-sm sm:rounded-md" x-show="!showComments">
     <div class="self-center text-zinc-400 sm:self-start">WRITTEN BY</div>
     <div class="flex flex-col items-center gap-4 sm:flex-row sm:items-start">
         @if (!is_null($post->author_pp))
@@ -11,7 +11,7 @@
         @endif
         <div class="flex flex-col items-center sm:items-start">
             <a href="{{ route('authors.visit', [$post->author_username, 'page' => 1]) }}"
-                class="text-lg font-semibold">{{ $post->author_name }}</a>
+                class="text-lg font-semibold dark:text-white">{{ $post->author_name }}</a>
             <p class="text-sm text-zinc-400">{{ $post->author_bio }}</p>
         </div>
     </div>

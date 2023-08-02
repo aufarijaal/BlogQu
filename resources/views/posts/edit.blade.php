@@ -22,7 +22,7 @@
                 @method('put')
 
                 <input type="hidden" name="id" value="{{ $post->post_id }}">
-                <div class="flex flex-col gap-4 p-6 bg-white rounded-md shadow-sm">
+                <div class="flex flex-col gap-4 p-6 bg-white dark:bg-zinc-800 rounded-md shadow-sm">
                     {{-- Errors --}}
                     @if ($errors->any())
                         <div class="p-2 border rounded-md cursor-pointer bg-rose-50 border-rose-500" id="form-errors"
@@ -37,7 +37,7 @@
 
                     {{-- Input post thumbnail --}}
                     <div class="flex flex-col items-center self-center gap-2">
-                        <label class="text-xl font-bold" for="post-thumbnail">Thumbnail</label>
+                        <label class="text-xl font-bold dark:text-white" for="post-thumbnail">Thumbnail</label>
 
                         @if (!is_null($post->post_thumbnail))
                             <div class="flex gap-1">
@@ -73,16 +73,16 @@
 
                     {{-- Input post title --}}
                     <div class="flex flex-col gap-2">
-                        <label class="text-xl font-bold" for="post-title">Title</label>
+                        <label class="text-xl font-bold dark:text-white" for="post-title">Title</label>
                         <input
-                            class="text-xl transition duration-150 ease-in-out bg-white rounded-md border-zinc-300 focus:outline-none focus:border-zinc-300 focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+                            class="text-xl transition duration-150 ease-in-out bg-white dark:bg-zinc-900 dark:border-zinc-600 dark:text-white rounded-md border-zinc-300 focus:outline-none focus:border-zinc-300 focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-800"
                             type="text" id="post-title" name="title" autofocus value="{{ $post->post_title }}" maxlength="255">
                     </div>
 
                     {{-- Input post category --}}
                     <div class="flex flex-col gap-2">
-                        <label class="text-xl font-bold" for="post-category">Category</label>
-                        <select class="bg-white rounded-md cursor-pointer border-zinc-300 focus:border-zinc-300"
+                        <label class="text-xl font-bold dark:text-white" for="post-category">Category</label>
+                        <select class="bg-white rounded-md cursor-pointer border-zinc-300 focus:border-zinc-300 dark:bg-zinc-900 dark:border-zinc-600 dark:text-white"
                             name="category" id="post-category">
                             @foreach ($allCategories as $category)
                                 <option value="{{ $category->slug }}"
@@ -93,7 +93,7 @@
                     </div>
 
                     <div class="flex flex-col gap-2">
-                        <label class="text-xl font-bold" for="post-tags">
+                        <label class="text-xl font-bold dark:text-white" for="post-tags">
                             Tags
                             <span class="text-sm font-normal text-zinc-400">(Max 5)</span>
                         </label>
@@ -101,7 +101,7 @@
                     </div>
 
                     {{-- Input post body --}}
-                    <div class="flex flex-col gap-2">
+                    <div class="flex flex-col gap-2 dark:text-white">
                         <label class="text-xl font-bold" for="post-body">Content</label>
                         <x-trix-field id="post-body" name="body" value="{!! $postBody->toTrixHtml() !!}" />
                     </div>
@@ -119,7 +119,7 @@
                         <x-dropdown width="w-32">
                             <x-slot name="trigger">
                                 <button
-                                    class="flex items-center gap-2 p-1 px-3 text-sm bg-white border rounded-md border-zinc-300 h-9"
+                                    class="flex items-center gap-2 p-1 px-3 text-sm bg-white dark:bg-zinc-700 dark:text-white border dark:border-none rounded-md border-zinc-300 h-9"
                                     type="button">
                                     <div
                                         x-text="postStatus === 'draft' ? 'Draft' : postStatus === 'archived' ? 'Archive' : 'Publish'">

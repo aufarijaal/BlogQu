@@ -3,7 +3,7 @@
 @endphp
 
 <nav x-data="{ open: false }"
-    class="fixed top-0 left-0 z-10 w-full bg-white border-b border-gray-100 dark:bg-gray-800 dark:border-gray-700">
+    class="fixed top-0 left-0 z-10 w-full bg-white border-b border-gray-100 dark:bg-zinc-800 dark:border-gray-700">
     <!-- Primary Navigation Menu -->
     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -19,11 +19,11 @@
                 <div>
                     @if (Route::current()->uri != 'posts/{postId}/edit' && Route::current()->uri != 'profile')
                         <form action="{{ route('search.posts') }}" method="get">
-                            <div class="flex items-center h-8 pl-2 overflow-hidden rounded-md bg-zinc-100 pseudo-input"
+                            <div class="flex items-center h-8 pl-2 overflow-hidden rounded-md bg-zinc-100 dark:bg-zinc-600 text-white pseudo-input"
                                 tabindex="0">
                                 <x-icons.search class="w-5 h-5 text-zinc-400" />
                                 <input
-                                    class="sm:w-[200px] w-full border-none bg-transparent outline-none focus:ring-0 text-sm"
+                                    class="sm:w-[200px] w-full border-none bg-transparent outline-none focus:ring-0 text-sm placeholder:text-white"
                                     type="text" name="q" placeholder="Search... (Press /)" tabindex="-1"
                                     id="search-bar" required>
                             </div>
@@ -39,7 +39,7 @@
                         <form action="{{ route('posts.create') }}" method="post">
                             @csrf
                             <button
-                                class="flex items-center gap-2 px-4 text-sm font-bold text-white rounded-md bg-cyan-500 h-9"
+                                class="flex items-center gap-2 px-4 text-sm font-bold text-white rounded-md bg-cyan-500 dark:bg-cyan-800 h-9"
                                 type="submit">
                                 <x-icons.magic class="w-5 h-5" />
                                 Write
@@ -50,7 +50,7 @@
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button
-                                class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none">
+                                class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md dark:text-gray-400 dark:bg-zinc-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none">
                                 @if (!is_null($profilePicture))
                                     <img class="mr-2 rounded-full w-9 h-9"
                                         src="{{ asset('/storage/' . $profilePicture) }}" alt="Profile picture">
@@ -86,6 +86,19 @@
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
+                            <x-dropdown-item>
+                                <div class="flex items-center justify-between" x-data>
+                                    <div>Theme</div>
+                                    <select class="h-6 text-xs p-1 pr-4 w-[80px] border-none bg-cyan-50 text-cyan-500 font-semibold rounded-md" @change="(e) => {
+                                        localStorage.setItem('theme', e.target.value);
+                                    }">
+                                        <option value="system">System</option>
+                                        <option value="light">Light</option>
+                                        <option value="dark">Dark</option>
+                                    </select>
+                                </div>
+                            </x-dropdown-item>
+
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
@@ -103,7 +116,7 @@
                 <div class="items-center hidden gap-2 sm:flex">
                     <a class="flex items-center justify-center w-24 h-8 text-sm font-bold text-white rounded-md bg-cyan-500 sm:text-base sm:w-28"
                         href="{{ route('login') }}">LOGIN</a>
-                    <a class="flex items-center justify-center w-24 h-8 text-sm font-bold bg-white border rounded-md border-cyan-500 text-cyan-500 sm:text-base sm:w-28"
+                    <a class="flex items-center justify-center w-24 h-8 text-sm font-bold bg-white dark:bg-zinc-800 border rounded-md border-cyan-500 text-cyan-500 sm:text-base sm:w-28"
                         href="{{ route('register') }}">REGISTER</a>
                 </div>
             @endif
@@ -131,7 +144,7 @@
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
             @if (Auth::user())
                 <div class="px-4">
-                    <div class="text-base font-medium text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
+                    <div class="text-base font-medium text-zinc-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
                     <div class="text-sm font-medium text-gray-500">{{ Auth::user()->email }}</div>
                 </div>
                 <div class="mt-3 space-y-1">

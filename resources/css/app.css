@@ -9,10 +9,15 @@
     input,
     select,
     .trix-content {
-        @apply transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800;
+        @apply transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-800;
     }
+
+    trix-editor.trix-content pre {
+        @apply bg-zinc-700;
+    }
+
     .pseudo-input {
-        @apply transition duration-150 ease-in-out focus-within:outline-none focus-within:ring-2 focus-within:ring-cyan-500 focus-within:ring-offset-2 dark:focus-within:ring-offset-gray-800;
+        @apply transition duration-150 ease-in-out focus-within:outline-none focus-within:ring-2 focus-within:ring-cyan-500 focus-within:ring-offset-2 dark:focus-within:ring-offset-zinc-800;
     }
     .post-body-wrapper {
         @apply leading-[1.7] text-[#213547];
@@ -34,14 +39,18 @@
         font-weight: bolder;
         font-size: initial;
     }
+
+    button[type=button].trix-button--icon {
+        @apply dark:text-white bg-cyan-100;
+    }
 }
 
 @layer components {
     .category-chip {
-        @apply px-4 py-1.5 hover:bg-zinc-700 text-xs sm:text-sm font-bold tracking-widest text-white uppercase rounded-full bg-zinc-900;
+        @apply px-4 py-1.5 hover:bg-zinc-700 text-xs sm:text-sm font-bold tracking-widest text-white uppercase rounded-full bg-zinc-900 dark:bg-white dark:text-zinc-900;
     }
     .tag-chip {
-        @apply bg-cyan-100 text-cyan-600 max-w-[200px] w-max overflow-hidden overflow-ellipsis whitespace-nowrap text-sm font-bold px-2 py-0.5 rounded-md;
+        @apply bg-cyan-100 text-cyan-600 max-w-[200px] w-max overflow-hidden overflow-ellipsis whitespace-nowrap text-sm font-bold px-2 py-0.5 rounded-md dark:text-cyan-50 dark:bg-cyan-800;
     }
     .tag-selector-list-item {
         @apply px-2 py-1 text-sm font-semibold text-left rounded-md cursor-pointer text-cyan-600 bg-cyan-50;

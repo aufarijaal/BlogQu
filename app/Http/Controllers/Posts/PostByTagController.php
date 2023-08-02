@@ -14,9 +14,17 @@ class PostByTagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke($tagSlug)
+    public function __invoke(Request $request, $tagSlug)
     {
-        // TODO: Adjust this query to select posts by tag
+        $currentPage = $request->query("page") ?? 1;
+        $dataPerPage = 10;
+        $nextPage = (int) $currentPage + 1;
+        $prevPage = (int) $currentPage - 1;
+        $hasNextPage = null;
+        $hasPrevPage = null;
+        $totalPages = null;
+        $totalData = null;
+
         $tag = \App\Models\Tag::where("slug", $tagSlug)->get()->first();
         $posts = DB::table('posts')->select(
             "posts.id as post_id",
@@ -33,17 +41,43 @@ class PostByTagController extends Controller
             "posts.status as post_status",
             "posts.parent_id as post_parent_id",
             "posts.updated_at",
-        )->join("users", "users.id", "=", "posts.user_id")
+            DB::raw("(SELECT COUNT(*) FROM likes WHERE likes.post_id = posts.id) as likes_count"),
+            DB::raw("(SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id) as comments_count")
+        )
+            ->join("users", "users.id", "=", "posts.user_id")
             ->join("profiles", "profiles.user_id", "=", "users.id")
             ->join("categories", "categories.id", "=", "posts.category_id")
             ->join("post_tags", "post_tags.post_id", "=", "posts.id")
             ->join("tags", "tags.id", "=", "post_tags.tag_id")
             ->whereRaw("posts.status = ? AND tags.slug = ?", ["published", $tagSlug])
+            ->limit($dataPerPage)
+            ->offset($dataPerPage * ($currentPage - 1))
             ->get();
+
+        $totalData = DB::table('posts')->select(DB::raw("COUNT(*) as total_count"))
+            ->join("users", "users.id", "=", "posts.user_id")
+            ->join("profiles", "profiles.user_id", "=", "users.id")
+            ->join("categories", "categories.id", "=", "posts.category_id")
+            ->join("post_tags", "post_tags.post_id", "=", "posts.id")
+            ->join("tags", "tags.id", "=", "post_tags.tag_id")
+            ->whereRaw("posts.status = ? AND tags.slug = ?", ["published", $tagSlug])
+            ->get()->first()->total_count;
+
+        $totalPages = (int) ceil($totalData / $dataPerPage);
+        $hasPrevPage = $currentPage > 1;
+        $hasNextPage = $currentPage < $totalPages;
 
         return view("posts.post-by-tag", [
             "posts" => $posts,
-            "tagName" => $tag->name
+            "tag" => $tag,
+            "nextPage" => $nextPage,
+            "prevPage" => $prevPage,
+            "hasPrevPage" => $hasPrevPage,
+            "hasNextPage" => $hasNextPage,
+            "currentPage" => $currentPage,
+            "dataPerPage" => $dataPerPage,
+            "totalData" => $totalData,
+            "totalPages" => $totalPages
         ]);
     }
 }

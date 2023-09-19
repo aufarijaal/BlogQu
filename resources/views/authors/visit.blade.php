@@ -8,7 +8,7 @@
             <div class="flex flex-col items-center gap-4 p-6 bg-white dark:bg-zinc-800 rounded-none shadow-sm sm:rounded-md">
                 <div>
                     @if (!is_null($author->author_pp))
-                        <img class="w-20 h-20 rounded-full" src="{{ asset('/storage/' . $author->author_pp) }}"
+                        <img class="w-20 h-20 rounded-full" src="{{ asset(str_contains($author->author_pp, 'http') ? $author->author_pp : '/storage/' . $author->author_pp) }}"
                             alt="{{ $author->author_name . '\'s profile picture' }}">
                     @else
                         <div

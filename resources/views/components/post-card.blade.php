@@ -7,7 +7,7 @@
     <div class="relative post-card-header">
         <div class="flex items-center gap-2 mb-6">
             @if (!is_null($post->author_pp))
-                <img class="flex-shrink-0 w-10 h-10 rounded-full" src="{{ asset('/storage/' . $post->author_pp) }}"
+                <img class="flex-shrink-0 w-10 h-10 rounded-full" src="{{ asset(str_contains($post->author_pp, 'http') ? $post->author_pp : '/storage/' . $post->author_pp) }}"
                     alt="Profile picture">
             @else
                 <div
@@ -35,7 +35,7 @@
             href="{{ $post->post_slug != null ? route('posts.read', ['authorUsername' => $post->author_username, 'postSlug' => $post->post_slug]) : '#' }}">
             @if ($post->post_thumbnail)
                 <img class="object-cover w-full post-card-thumbnail rounded-xl h-44"
-                    src="{{ asset('/storage/' . $post->post_thumbnail) }}"
+                    src="{{ asset(str_contains($post->post_thumbnail, 'http') ? $post->post_thumbnail : '/storage/' . $post->post_thumbnail) }}"
                     alt="{{ $post->title ?? 'Post' . '\'s Thumbnail' }}">
             @else
                 <div class="flex items-center justify-center w-full post-card-no-thumbnail h-44 rounded-xl bg-cyan-50 dark:bg-cyan-800">

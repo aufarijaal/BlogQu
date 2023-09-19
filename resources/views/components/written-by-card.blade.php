@@ -2,7 +2,7 @@
     <div class="self-center text-zinc-400 sm:self-start">WRITTEN BY</div>
     <div class="flex flex-col items-center gap-4 sm:flex-row sm:items-start">
         @if (!is_null($post->author_pp))
-        <img class="w-16 h-16 rounded-full" src="{{ asset('/storage/' . $post->author_pp) }}"
+        <img class="w-16 h-16 rounded-full" src="{{ asset(str_contains($post->author_pp, 'http') ? $post->author_pp : '/storage/' . $post->author_pp) }}"
             alt="{{ $post->author_name . '\'s profile picture' }}">
         @else
             <div class="flex items-center justify-center flex-shrink-0 w-16 h-16 rounded-full cursor-pointer bg-zinc-200">

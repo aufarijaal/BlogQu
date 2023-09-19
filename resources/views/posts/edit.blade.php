@@ -56,7 +56,7 @@
 
                         @if (!is_null($post->post_thumbnail))
                             <img class="object-cover w-3/4 max-h-[300px]"
-                                src="{{ asset('/storage/' . $post->post_thumbnail) }}" alt="Thumbnail">
+                                src="{{ asset(str_contains($post->post_thumbnail, 'http') ? $post->post_thumbnail : '/storage/' . $post->post_thumbnail) }}" alt="Thumbnail">
                         @else
                             <label
                                 class="w-[360px] h-[250px] text-lg flex justify-center items-center cursor-pointer text-zinc-500 bg-zinc-100"

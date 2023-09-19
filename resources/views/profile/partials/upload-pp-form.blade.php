@@ -32,7 +32,7 @@
         <div class="mb-4 text-sm font-medium text-gray-700 dark:text-gray-300">Click below to upload</div>
         <label for="pp">
             @if (!is_null($profilePicture))
-                <img class="w-32 h-32 rounded-full cursor-pointer" src="{{ asset('/storage/' . $profilePicture) }}"
+                <img class="w-32 h-32 rounded-full cursor-pointer" src="{{ asset(str_contains($profilePicture, 'http') ? $profilePicture : '/storage/' . $profilePicture) }}"
                     alt="Profile picture">
             @else
                 <div class="flex items-center justify-center w-32 h-32 rounded-full cursor-pointer bg-zinc-200">

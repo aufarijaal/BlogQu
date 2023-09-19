@@ -22,7 +22,7 @@
                 <h1 class="text-4xl font-bold md:text-5xl font-barlow dark:text-white">{{ $post->post_title }}</h1>
                 <div class="flex items-center gap-2">
                     @if (!is_null($post->author_pp))
-                    <img class="w-10 h-10 rounded-full" src="{{ asset('/storage/' . $post->author_pp) }}"
+                    <img class="w-10 h-10 rounded-full" src="{{ asset(str_contains($post->author_pp, 'http') ? $post->author_pp : '/storage/' . $post->author_pp) }}"
                         alt="{{ $post->author_name . '\'s profile picture' }}">
                     @else
                         <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 rounded-full cursor-pointer bg-zinc-200">
@@ -40,7 +40,7 @@
 
                 @if ($post->post_thumbnail)
                     <div class="self-center">
-                        <img src="{{ asset('/storage/' . $post->post_thumbnail) }}"
+                        <img src="{{ asset(str_contains($post->post_thumbnail, 'http') ? $post->post_thumbnail : '/storage/' . $post->post_thumbnail) }}"
                             alt="{{ $post->post_title . '\'s thumbnail' }}">
                     </div>
                 @endif

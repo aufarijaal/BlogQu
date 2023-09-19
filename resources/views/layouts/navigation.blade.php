@@ -23,7 +23,7 @@
                                 tabindex="0">
                                 <x-icons.search class="w-5 h-5 text-zinc-400" />
                                 <input
-                                    class="sm:w-[200px] w-full border-none bg-transparent outline-none focus:ring-0 text-sm placeholder:text-white"
+                                    class="sm:w-[200px] w-full border-none bg-transparent outline-none focus:ring-0 text-sm placeholder:text-gray-400 dark:placeholder:text-white"
                                     type="text" name="q" placeholder="Search... (Press /)" tabindex="-1"
                                     id="search-bar" required>
                             </div>
@@ -35,7 +35,7 @@
             @if (Auth::user())
                 <!-- Settings Dropdown -->
                 <div class="hidden gap-4 sm:flex sm:items-center sm:ml-6">
-                    @if (!request()->routeIs("posts.edit"))
+                    @if (!request()->routeIs('posts.edit'))
                         <form action="{{ route('posts.create') }}" method="post">
                             @csrf
                             <button
@@ -53,7 +53,8 @@
                                 class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md dark:text-gray-400 dark:bg-zinc-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none">
                                 @if (!is_null($profilePicture))
                                     <img class="mr-2 rounded-full w-9 h-9"
-                                        src="{{ asset('/storage/' . $profilePicture) }}" alt="Profile picture">
+                                        src="{{ asset(str_contains($profilePicture, 'http') ? $profilePicture : '/storage/' . $profilePicture) }}"
+                                        alt="Profile picture">
                                 @else
                                     <div
                                         class="flex items-center justify-center mr-2 rounded-full cursor-pointer w-9 h-9 bg-zinc-200">
@@ -87,11 +88,17 @@
                             </x-dropdown-link>
 
                             <x-dropdown-item>
-                                <div class="flex items-center justify-between" x-data>
+                                <div class="flex items-center justify-between" x-data="{
+                                    theme: localStorage.getItem('theme') ||
+                                        localStorage.setItem('theme', 'system')
+                                }">
                                     <div>Theme</div>
-                                    <select class="h-6 text-xs p-1 pr-4 w-[80px] border-none bg-cyan-50 text-cyan-500 font-semibold rounded-md" @change="(e) => {
+                                    <select
+                                        class="h-6 text-xs p-1 pr-4 w-[80px] border-none bg-cyan-50 text-cyan-500 font-semibold rounded-md"
+                                        @change="(e) => {
                                         localStorage.setItem('theme', e.target.value);
-                                    }">
+                                        location.reload();
+                                    }" :value="theme">
                                         <option value="system">System</option>
                                         <option value="light">Light</option>
                                         <option value="dark">Dark</option>
@@ -148,7 +155,7 @@
                     <div class="text-sm font-medium text-gray-500">{{ Auth::user()->email }}</div>
                 </div>
                 <div class="mt-3 space-y-1">
-                    @if (!request()->routeIs("posts.edit"))
+                    @if (!request()->routeIs('posts.edit'))
                         <div>
                             <form action="{{ route('posts.create') }}" method="post">
                                 @csrf

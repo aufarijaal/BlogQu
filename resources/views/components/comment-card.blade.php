@@ -14,7 +14,7 @@
     <div class="flex items-center w-full gap-2 p-3 pr-1 border rounded-md comment dark:border-zinc-600 dark:text-white" {{ $attributes }}>
         @if (!is_null($comment['commenter']['profile']['pp']))
             <img class="flex-shrink-0 w-8 h-8 rounded-full"
-                src="{{ asset('/storage/' . $comment['commenter']['profile']['pp']) }}"
+                src="{{ asset(str_contains($comment['commenter']['profile']['pp'], 'http') ? $comment['commenter']['profile']['pp'] : '/storage/' . $comment['commenter']['profile']['pp']) }}"
                 alt="{{ $comment['commenter']['name'] . '\'s profile picture' }}">
         @else
             <div class="flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-full cursor-pointer bg-zinc-200">
@@ -106,7 +106,7 @@
                         <div class="flex items-center flex-grow w-full gap-2 p-3 pr-1 border dark:border-zinc-600 rounded-md reply">
                             @if (!is_null($reply['commenter']['profile']['pp']))
                                 <img class="flex-shrink-0 w-8 h-8 rounded-full"
-                                    src="{{ asset('/storage/' . $reply['commenter']['profile']['pp']) }}"
+                                    src="{{ asset(str_contains($reply['commenter']['profile']['pp'], 'http') ? $reply['commenter']['profile']['pp'] : '/storage/' . $reply['commenter']['profile']['pp']) }}"
                                     alt="{{ $comment['commenter']['name'] . '\'s profile picture' }}">
                             @else
                                 <div

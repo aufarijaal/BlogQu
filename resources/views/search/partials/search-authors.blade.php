@@ -7,7 +7,7 @@
                 href="{{ route('authors.visit', [$author->author_username]) }}">
                 <div class="flex items-center flex-shrink-0">
                     @if (!is_null($author->author_pp))
-                        <img class="rounded-full w-14 h-14" src="{{ asset('/storage/' . $author->author_pp) }}"
+                        <img class="rounded-full w-14 h-14" src="{{ asset(str_contains($author->author_pp, 'http') ? $author->author_pp : '/storage/' . $author->author_pp) }}"
                             alt="{{ $author->author_name . '\'s profile picture' }}">
                     @else
                         <div

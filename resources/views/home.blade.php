@@ -11,14 +11,19 @@
                     Popular Posts
                 </div>
                 <div class="flex flex-wrap justify-center gap-2">
-                    @foreach ($posts as $post)
-                        <x-post-card :post="$post" />
-                    @endforeach
+                    @if (count($posts) === 0)
+                        <div class="text-gray-500">No Posts available</div>
+                    @else
+                        @foreach ($posts as $post)
+                            <x-post-card :post="$post" />
+                        @endforeach
+                    @endif
                 </div>
             </div>
             <div class="flex flex-col gap-4 px-2 py-6 bg-white dark:bg-zinc-800 rounded-none shadow-sm sm:px-6 sm:rounded-md"
                 id="home-categories-wrapper">
-                <div class="flex items-center justify-center dark:text-white gap-1 text-2xl font-bold sm:justify-start ">
+                <div
+                    class="flex items-center justify-center dark:text-white gap-1 text-2xl font-bold sm:justify-start ">
                     Popular Categories
                 </div>
                 <div class="flex flex-wrap justify-center gap-2 sm:justify-start">
@@ -29,7 +34,8 @@
             </div>
             <div class="flex flex-col gap-4 px-2 py-6 bg-white dark:bg-zinc-800 rounded-none shadow-sm sm:px-6 sm:rounded-md"
                 id="home-tags-wrapper">
-                <div class="flex items-center justify-center dark:text-white gap-1 text-2xl font-bold sm:justify-start ">
+                <div
+                    class="flex items-center justify-center dark:text-white gap-1 text-2xl font-bold sm:justify-start ">
                     Popular Tags
                 </div>
                 <div class="flex flex-wrap justify-center gap-2 sm:justify-start">

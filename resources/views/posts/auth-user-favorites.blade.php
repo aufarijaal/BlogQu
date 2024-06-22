@@ -10,7 +10,7 @@
             </div>
             <div class="bg-white dark:bg-zinc-800 p-6 rounded-md shadow-sm flex flex-wrap gap-2 justify-center">
                 @if (count($posts) == 0)
-                    <div class="text-zinc-400 text-lg">No posts</div>
+                    <div class="text-gray-500">You have no saved posts</div>
                 @else
                     @foreach ($posts as $post)
                         <x-post-card :post="$post" />

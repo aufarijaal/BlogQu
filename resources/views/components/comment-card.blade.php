@@ -11,7 +11,8 @@
 @endphp
 
 <div class="w-full">
-    <div class="flex items-center w-full gap-2 p-3 pr-1 border rounded-md comment dark:border-zinc-600 dark:text-white" {{ $attributes }}>
+    <div class="flex items-center w-full gap-2 p-3 pr-1 border rounded-md comment dark:border-zinc-600 dark:text-white"
+        {{ $attributes }}>
         @if (!is_null($comment['commenter']['profile']['pp']))
             <img class="flex-shrink-0 w-8 h-8 rounded-full"
                 src="{{ asset(str_contains($comment['commenter']['profile']['pp'], 'http') ? $comment['commenter']['profile']['pp'] : '/storage/' . $comment['commenter']['profile']['pp']) }}"
@@ -36,15 +37,15 @@
                     <input type="hidden" name="comment-id" value="{{ $comment['id'] }}">
                     <button class="flex items-center gap-1 transition" title="Like">
                         @if ($commentLiked)
-                            <x-icons.like-fill class="w-5 h-5 text-cyan-500" />
+                            <x-icons.like-fill class="w-5 h-5 text-teal-500" />
                         @else
-                            <x-icons.like-outline class="w-5 h-5 text-zinc-400 hover:text-cyan-500" />
+                            <x-icons.like-outline class="w-5 h-5 text-zinc-400 hover:text-teal-500" />
                         @endif
                         <div class="text-sm text-zinc-400">{{ count($comment['likes']) }}</div>
                     </button>
                 </form>
 
-                <button class="flex items-center gap-1 transition text-zinc-400 hover:text-cyan-500"
+                <button class="flex items-center gap-1 transition text-zinc-400 hover:text-teal-500"
                     @click="() => {
                     $refs.inputCommentParentId.value = {{ $comment['id'] }}
                     replyTo = {
@@ -103,7 +104,8 @@
                 @foreach ($comment['replies'] as $reply)
                     <div class="flex items-center gap-1 dark:text-white">
                         <x-icons.arrow-down-right class="flex-shrink-0 text-zinc-400" />
-                        <div class="flex items-center flex-grow w-full gap-2 p-3 pr-1 border dark:border-zinc-600 rounded-md reply">
+                        <div
+                            class="flex items-center flex-grow w-full gap-2 p-3 pr-1 border dark:border-zinc-600 rounded-md reply">
                             @if (!is_null($reply['commenter']['profile']['pp']))
                                 <img class="flex-shrink-0 w-8 h-8 rounded-full"
                                     src="{{ asset(str_contains($reply['commenter']['profile']['pp'], 'http') ? $reply['commenter']['profile']['pp'] : '/storage/' . $reply['commenter']['profile']['pp']) }}"

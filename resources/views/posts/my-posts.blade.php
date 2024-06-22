@@ -34,9 +34,13 @@
                 </x-dropdown>
             </div>
             <div class="bg-white dark:bg-zinc-800 p-6 rounded-md shadow-sm flex flex-col gap-2">
-                @foreach ($posts as $post)
-                    <x-post-bar :post="$post" />
-                @endforeach
+                @if (count($posts) === 0)
+                    <div class="text-gray-500 text-center">You haven't posted anything</div>
+                @else
+                    @foreach ($posts as $post)
+                        <x-post-bar :post="$post" />
+                    @endforeach
+                @endif
             </div>
 
             {{-- Paginator --}}

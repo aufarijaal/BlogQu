@@ -10,7 +10,7 @@
             <div class="flex items-center gap-4">
                 <!-- Logo -->
                 <div class="flex items-center shrink-0">
-                    <a class="flex items-center gap-2 text-xl font-bold text-cyan-600 font-barlow"
+                    <a class="flex items-center gap-2 text-xl font-bold text-teal-600 font-barlow"
                         href="{{ route('home') }}">
                         <x-application-logo class="block w-auto fill-current h-9" />
                         <span class="hidden sm:inline">BlogQu</span>
@@ -19,11 +19,11 @@
                 <div>
                     @if (Route::current()->uri != 'posts/{postId}/edit' && Route::current()->uri != 'profile')
                         <form action="{{ route('search.posts') }}" method="get">
-                            <div class="flex items-center h-8 pl-2 overflow-hidden rounded-md bg-zinc-100 dark:bg-zinc-600 text-white pseudo-input"
+                            <div class="flex items-center h-8 pl-2 overflow-hidden rounded-md bg-zinc-100 dark:bg-zinc-600 text-white"
                                 tabindex="0">
                                 <x-icons.search class="w-5 h-5 text-zinc-400" />
                                 <input
-                                    class="sm:w-[200px] w-full border-none bg-transparent outline-none focus:ring-0 text-sm placeholder:text-gray-400 dark:placeholder:text-white"
+                                    class="sm:w-[200px] w-full border-none bg-transparent outline-none focus:ring-0 text-sm text-black dark:text-white placeholder:text-gray-400 dark:placeholder:text-white"
                                     type="text" name="q" placeholder="Search... (Press /)" tabindex="-1"
                                     id="search-bar" required>
                             </div>
@@ -39,7 +39,7 @@
                         <form action="{{ route('posts.create') }}" method="post">
                             @csrf
                             <button
-                                class="flex items-center gap-2 px-4 text-sm font-bold text-white rounded-md bg-cyan-500 dark:bg-cyan-800 h-9"
+                                class="flex items-center gap-2 px-4 text-sm font-bold text-white rounded-md bg-teal-500 dark:bg-teal-800 h-9"
                                 type="submit">
                                 <x-icons.magic class="w-5 h-5" />
                                 Write
@@ -94,11 +94,12 @@
                                 }">
                                     <div>Theme</div>
                                     <select
-                                        class="h-6 text-xs p-1 pr-4 w-[80px] border-none bg-cyan-50 text-cyan-500 font-semibold rounded-md"
+                                        class="h-6 text-xs p-1 pr-4 w-[80px] border-none bg-teal-50 text-teal-500 font-semibold rounded-md"
                                         @change="(e) => {
                                         localStorage.setItem('theme', e.target.value);
                                         location.reload();
-                                    }" :value="theme">
+                                    }"
+                                        :value="theme">
                                         <option value="system">System</option>
                                         <option value="light">Light</option>
                                         <option value="dark">Dark</option>
@@ -121,9 +122,9 @@
                 </div>
             @else
                 <div class="items-center hidden gap-2 sm:flex">
-                    <a class="flex items-center justify-center w-24 h-8 text-sm font-bold text-white rounded-md bg-cyan-500 sm:text-base sm:w-28"
+                    <a class="flex items-center justify-center w-24 h-8 text-sm font-bold text-white rounded-md bg-teal-500 sm:text-base sm:w-28"
                         href="{{ route('login') }}">LOGIN</a>
-                    <a class="flex items-center justify-center w-24 h-8 text-sm font-bold bg-white dark:bg-zinc-800 border rounded-md border-cyan-500 text-cyan-500 sm:text-base sm:w-28"
+                    <a class="flex items-center justify-center w-24 h-8 text-sm font-bold bg-white dark:bg-zinc-800 border rounded-md border-teal-500 text-teal-500 sm:text-base sm:w-28"
                         href="{{ route('register') }}">REGISTER</a>
                 </div>
             @endif
@@ -160,7 +161,7 @@
                             <form action="{{ route('posts.create') }}" method="post">
                                 @csrf
                                 <button
-                                    class="flex items-center w-full h-10 gap-2 pl-4 font-semibold text-white bg-cyan-500"
+                                    class="flex items-center w-full h-10 gap-2 pl-4 font-semibold text-white bg-teal-500"
                                     type="submit">
                                     <x-icons.magic class="w-5 h-5" />
                                     Write

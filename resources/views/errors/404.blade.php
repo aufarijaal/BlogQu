@@ -12,10 +12,11 @@
 </head>
 
 <body class="flex flex-col items-center justify-center w-full min-h-screen dark:bg-zinc-900">
-    <div class="font-bold text-[150px] sm:text-[200px] text-cyan-600">404</div>
+    <div class="font-bold text-[150px] sm:text-[200px] text-teal-600">404</div>
     <div class="text-4xl font-semibold">NOT FOUND</div>
     <div class="mt-6">Sorry, We could not find the page you are looking for</div>
-    <button class="text-cyan-500 border border-cyan-500 hover:bg-cyan-100 hover:border-cyan-600 hover:text-cyan-600 bg-cyan-50 px-4 py-1.5 rounded-md mt-4"
+    <button
+        class="text-teal-500 border border-teal-500 hover:bg-teal-100 hover:border-teal-600 hover:text-teal-600 bg-teal-50 px-4 py-1.5 rounded-md mt-4"
         onclick="window.history.go(-1); return false;">Go Back</button>
 </body>
 

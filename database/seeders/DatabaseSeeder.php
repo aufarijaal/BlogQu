@@ -18,12 +18,12 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             CategorySeeder::class,
             TagSeeder::class,
-            PostSeeder::class,
-            CommentSeeder::class,
-            RepliesSeeder::class,
-            CommentLikeSeeder::class,
-            LikeSeeder::class,
-            FavoriteSeeder::class,
+            // PostSeeder::class,
+            // CommentSeeder::class,
+            // RepliesSeeder::class,
+            // CommentLikeSeeder::class,
+            // LikeSeeder::class,
+            // FavoriteSeeder::class,
         ]);
     }
 }

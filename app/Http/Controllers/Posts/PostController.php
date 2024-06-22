@@ -116,40 +116,40 @@ class PostController extends Controller
         $tagsRequest = json_decode($request["tags"]);
 
         DB::beginTransaction();
-            $post = \App\Models\Post::find((int) $request["id"]);
-            $tagIdsToSync = [];
+        $post = \App\Models\Post::find((int) $request["id"]);
+        $tagIdsToSync = [];
 
-            // Prepare the tag ids for synchronization, first populate the ids from the already existing tags.
-            foreach ($tagsRequest->tags as $item) {
-                array_push($tagIdsToSync, $item->id);
+        // Prepare the tag ids for synchronization, first populate the ids from the already existing tags.
+        foreach ($tagsRequest->tags as $item) {
+            array_push($tagIdsToSync, $item->id);
+        }
+
+        // And then, insert the new tags if user specifiy them.
+        if (count($tagsRequest->new) != 0) {
+            foreach ($tagsRequest->new as $tagName) {
+                $t = \App\Models\Tag::create([
+                    "name" => $tagName
+                ]);
+
+                \App\Models\Tag::where("id", $t->id)->update([
+                    "slug" => Str::slug($t->id . "-" . $t->name)
+                ]);
+
+                // Push the tag id to the ids array for synchronization
+                array_push($tagIdsToSync, $t->id);
             }
+        }
 
-            // And then, insert the new tags if user specifiy them.
-            if(count($tagsRequest->new) != 0) {
-                foreach ($tagsRequest->new as $tagName) {
-                    $t = \App\Models\Tag::create([
-                        "name" => $tagName
-                    ]);
-
-                    \App\Models\Tag::where("id", $t->id)->update([
-                        "slug" => Str::slug($t->id . "-" . $t->name)
-                    ]);
-
-                    // Push the tag id to the ids array for synchronization
-                    array_push($tagIdsToSync, $t->id);
-                }
-            }
-
-            // Second, sync the tags using the combination of newly created tags from the user and the updated old tags from the post
-            $post->tags()->sync($tagIdsToSync);
-            $post->update([
-                "category_id" => explode("-", $request["category"])[0],
-                "title" => $request["title"],
-                "slug" => Str::slug($request["title"] . "-" . fake()->uuid()),
-                "body" => $request["body"],
-                "excerpt" => Str::limit(strip_tags($request["body"]), 100, ""),
-                "status" => $request["status"]
-            ]);
+        // Second, sync the tags using the combination of newly created tags from the user and the updated old tags from the post
+        $post->tags()->sync($tagIdsToSync);
+        $post->update([
+            "category_id" => explode("-", $request["category"])[0],
+            "title" => $request["title"],
+            "slug" => Str::slug($request["title"] . "-" . fake()->uuid()),
+            "body" => $request["body"],
+            "excerpt" => Str::limit(strip_tags($request["body"]), 100, ""),
+            "status" => $request["status"]
+        ]);
         DB::commit();
 
         return back();

@@ -1,5 +1,6 @@
 import "./bootstrap";
 import "./libs/trix";
+import "./blog-read-script";
 import Alpine from "alpinejs";
 
 window.Alpine = Alpine;

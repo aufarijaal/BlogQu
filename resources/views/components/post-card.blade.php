@@ -7,7 +7,8 @@
     <div class="relative post-card-header">
         <div class="flex items-center gap-2 mb-6">
             @if (!is_null($post->author_pp))
-                <img class="flex-shrink-0 w-10 h-10 rounded-full" src="{{ asset(str_contains($post->author_pp, 'http') ? $post->author_pp : '/storage/' . $post->author_pp) }}"
+                <img class="flex-shrink-0 w-10 h-10 rounded-full"
+                    src="{{ asset(str_contains($post->author_pp, 'http') ? $post->author_pp : '/storage/' . $post->author_pp) }}"
                     alt="Profile picture">
             @else
                 <div
@@ -38,8 +39,9 @@
                     src="{{ asset(str_contains($post->post_thumbnail, 'http') ? $post->post_thumbnail : '/storage/' . $post->post_thumbnail) }}"
                     alt="{{ $post->title ?? 'Post' . '\'s Thumbnail' }}">
             @else
-                <div class="flex items-center justify-center w-full post-card-no-thumbnail h-44 rounded-xl bg-cyan-50 dark:bg-cyan-800">
-                    <x-application-logo class="opacity-50 text-cyan-500 dark:text-cyan-300" />
+                <div
+                    class="flex items-center justify-center w-full post-card-no-thumbnail h-44 rounded-xl bg-teal-50 dark:bg-teal-800">
+                    <x-application-logo class="opacity-50 text-teal-500 dark:text-teal-300" />
                 </div>
             @endif
         </a>
@@ -48,7 +50,7 @@
     {{-- Post card content --}}
     <div class="flex flex-col gap-1 post-card-content">
         @if (!request()->routeIs('post_by_category'))
-            <a class="px-2 py-1 overflow-hidden rounded-full text-cyan-600 max-w-[200px] w-max block whitespace-nowrap overflow-ellipsis text-xs bg-cyan-50 border border-cyan-600 font-medium hover:bg-cyan-100 dark:bg-cyan-800 dark:text-cyan-50 hover:dark:bg-cyan-900"
+            <a class="px-2 py-1 overflow-hidden rounded-full text-teal-600 max-w-[200px] w-max block whitespace-nowrap overflow-ellipsis text-xs bg-teal-50 border border-teal-600 font-medium hover:bg-teal-100 dark:bg-teal-800 dark:text-teal-50 hover:dark:bg-teal-900"
                 href="{{ $post->category_id != null ? route('post_by_category', ['categorySlug' => $post->category_slug]) : '#' }}">{{ $post->category_name ?? 'Uncategorized' }}</a>
         @endif
         <a href="{{ $post->post_slug != null ? route('posts.read', ['authorUsername' => $post->author_username, 'postSlug' => $post->post_slug]) : '#' }}"
@@ -59,11 +61,11 @@
     {{-- Post card footer --}}
     <div class="flex items-center gap-4 post-card-footer">
         <div class="flex items-center gap-1 text-sm">
-            <x-icons.heart-outline class="w-5 h-5 text-zinc-400"/>
+            <x-icons.heart-outline class="w-5 h-5 text-zinc-400" />
             <div class="dark:text-zinc-400">{{ $post->likes_count }}</div>
         </div>
         <div class="flex items-center gap-1 text-sm">
-            <x-icons.comment class="w-5 h-5 text-zinc-400"/>
+            <x-icons.comment class="w-5 h-5 text-zinc-400" />
             <div class="dark:text-zinc-400">{{ $post->comments_count }}</div>
         </div>
     </div>

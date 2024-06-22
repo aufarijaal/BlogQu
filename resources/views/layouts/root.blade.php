@@ -34,17 +34,16 @@
         </main>
 
         <!-- Page Footer -->
-        <footer class="w-full bg-teal-500 dark:bg-teal-700">
+        <footer class="w-full bg-teal-600 dark:bg-teal-700">
             <div class="max-w-4xl p-10 mx-auto">
                 <div class="flex flex-col items-center gap-6">
                     <div class="flex items-center gap-2 text-2xl font-bold text-white/90 font-barlow">
                         <x-application-logo class="w-12 h-12" />
                         <div>BlogQu</div>
                     </div>
-                    <p class="text-sm leading-[1.7] text-white text-justify">Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit.
-                        Corporis fugiat itaque at modi non qui quod quae vero cupiditate dolor enim sequi ratione
-                        voluptas asperiores est magnam, quaerat laboriosam accusantium?</p>
+                    <p class="text-sm leading-[1.7] text-white text-center">Welcome to our blogging community! Share
+                        your stories, explore fresh ideas, and join us in celebrating creativity. Thank you for being
+                        part of our journey—let's make every blog post an adventure!</p>
                 </div>
             </div>
         </footer>

@@ -152,7 +152,7 @@ class PostController extends Controller
         ]);
         DB::commit();
 
-        return back();
+        return redirect('posts/my-posts');
     }
 
     /**

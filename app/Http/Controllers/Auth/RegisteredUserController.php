@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Profile;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -30,22 +31,36 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        try {
+            $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
+                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
 
-        event(new Registered($user));
+            Profile::create([
+                'user_id' => $user->id,
+                'username' => "user" . $user->id . \Illuminate\Support\Str::random(5),
+                'gender' => 'M',
+                'dob' => '2000-10-17',
+                'bio' => '',
+                'about' => 'Hey there I am using BlogQu',
+                'pp' => null
+            ]);
 
-        Auth::login($user);
+            event(new Registered($user));
 
-        return redirect(RouteServiceProvider::HOME);
+            Auth::login($user);
+
+            return redirect(RouteServiceProvider::HOME);
+        } catch (\Throwable $th) {
+            dd($th);
+        }
     }
 }
